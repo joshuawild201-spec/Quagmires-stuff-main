@@ -1,0 +1,32 @@
+name: Compile Yeeps Mod to SO
+
+on:
+  workflow_dispatch: # Allows you to manually start the build
+
+jobs:
+  build-so:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Android NDK
+        uses: android-actions/setup-android@v3
+        with:
+          ndk-version: '25.2.9519653'
+
+      - name: Run Native Build Script
+        run: |
+          chmod +x build.sh
+          export ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME
+          ./build.sh
+
+      # Grabs the compiled .so out of the built menu folder
+      - name: Upload Compiled .so File
+        uses: actions/upload-artifact@v4
+        with:
+          name: blazes-yeeps-mod
+          path: |
+            build/**/*.so
+            mods/starter-menu/build/**/*.so
