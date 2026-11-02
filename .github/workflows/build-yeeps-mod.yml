@@ -3,7 +3,7 @@ name: Compile Yeeps Mod to SO
 on:
   workflow_dispatch: # Allows you to manually start the build
 
-jobs:
+job:
   build-so:
     runs-on: ubuntu-latest
 
